@@ -3,13 +3,16 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     ExecutableCommand,
 };
+use ratatui::{prelude::*, widgets::*};
 use ratatui::{
     prelude::{CrosstermBackend, Stylize, Terminal},
     widgets::Paragraph,
 };
 use std::io::{stderr, Result};
-
 fn main() -> Result<()> {
+    //let tumble_time = reqwest::get;
+    // test test
+    pub type Frame<'a> = ratatui::Frame<'a, CrosstermBackend<std::io::Stderr>>;
     stderr().execute(EnterAlternateScreen)?;
     enable_raw_mode()?;
     let mut terminal = Terminal::new(CrosstermBackend::new(stderr()))?;
@@ -19,7 +22,7 @@ fn main() -> Result<()> {
         terminal.draw(|frame| {
             let area = frame.size();
             frame.render_widget(
-                Paragraph::new("Hello Ratatui! (press 'q' to quit)")
+                Paragraph::new("Hello Ratatui! (press 'k' to quit)")
                     .black()
                     .on_blue(),
                 area,
