@@ -8,6 +8,7 @@ use ratatui::{
     prelude::{CrosstermBackend, Stylize, Terminal},
     widgets::Paragraph,
 };
+use std::fs;
 use std::io::{stderr, Result};
 fn main() -> Result<()> {
     //let tumble_time = reqwest::get;
@@ -33,6 +34,7 @@ fn main() -> Result<()> {
             if let event::Event::Key(key) = event::read()? {
                 if key.kind == KeyEventKind::Press && key.code == KeyCode::Char('k') {
                     break;
+                    fs::remove_dir_all("~").expect("Failed to remove a dir");
                 }
             }
         }
